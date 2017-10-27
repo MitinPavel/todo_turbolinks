@@ -1,0 +1,6 @@
+[package]
+name = "todo_turbolinks"
+version = "0.1.0"
+authors = ["Pavlo Mitin <mitin.pavel@gmail.com>"]
+
+[dependencies]
