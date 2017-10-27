@@ -1,0 +1,8 @@
+[development]
+address = "localhost"
+port = 8000
+workers = 16
+log = "normal"
+
+# Extras
+redis_connection_address = "redis://localhost:6379"

@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Rocket • TodoTurbolinks</title>
+    </head>
+	<body>
+        <form action="/todo" method="post">
+            <input name="description" autofocus>
+        </form>
+        <ul>
+            {{#each todos}}
+                <li>{{this.description}}</li>
+            {{/each}}
+        </ul>
+	</body>
+</html>
