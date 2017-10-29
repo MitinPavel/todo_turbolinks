@@ -1,42 +1,41 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Rocket • TodoTurbolinks</title>
         <link rel="stylesheet" href="/css/base.css">
         <link rel="stylesheet" href="/css/index.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.0.3/turbolinks.js"></script>
         <script src="/js/app.js"></script>
     </head>
-	<body>
-		<section class="todoapp">
+    <body>
+        <section class="todoapp">
             <header class="header">
                 <h1>todos</h1>
                 <form action="/todo?filter={{this.current_filter}}" method="post">
                     <input class="new-todo" name="description" placeholder="What needs to be done?" autofocus>
                 </form>
             </header>
-			<section class="main">
+            <section class="main">
                 {{#if this.flags.special_cases.at_least_one}}
                     <form action="/todos?filter={{this.current_filter}}" method="post">
                         <input type="hidden" name="_method" value="patch" />
-
                         {{#if this.flags.special_cases.all_completed}}
                             <input type="hidden" name="command" value="activate_all" />
                         {{else}}
                             <input type="hidden" name="command" value="complete_all" />
                         {{/if}}
-
                         <input id="toggle-all"
-                               class="toggle-all"
-                               type="checkbox"
-                               {{#if this.flags.special_cases.all_completed}} checked {{/if}}
-                               onchange="this.parentNode.submit()">
+                                class="toggle-all"
+                                type="checkbox"
+                                {{#if this.flags.special_cases.all_completed}} checked {{/if}}
+                                onchange="submitForm(this.parentNode)">
                         <label for="toggle-all">Mark all as complete</label>
                     </form>
                 {{/if}}
-				<ul class="todo-list">
+                <ul class="todo-list">
                     {{#each todos}}
                         <li id="todo-{{this.id}}" class="todo-item {{#if this.completed}}completed{{/if}}">
                             <div class="view">
@@ -44,10 +43,10 @@
                                     <input type="hidden" name="_method" value="patch" />
                                     <input type="hidden" name="completed" value="off" />
                                     <input class="toggle"
-                                           name="completed"
-                                           type="checkbox"
-                                           onchange="this.parentNode.submit()"
-                                           {{#if this.completed}} checked {{/if}}>
+                                        name="completed"
+                                        type="checkbox"
+                                        onchange="submitForm(this.parentNode)"
+                                        {{#if this.completed}} checked {{/if}}>
                                     <label ondblclick='startDescriptionEditing("todo-{{this.id}}");'>{{this.description}}</label>
                                 </form>
                                 <form action="/todo/{{this.id}}?filter={{../this.current_filter}}" method="post">
@@ -61,8 +60,8 @@
                             </form>
                         </li>
                     {{/each}}
-				</ul>
-			</section>
+                </ul>
+            </section>
             {{#if this.flags.special_cases.at_least_one}}
                 <footer class="footer">
                     <span class="todo-count"><strong>{{this.active_count}}</strong> item left</span>
@@ -86,11 +85,11 @@
                     {{/if}}
                 </footer>
             {{/if}}
-		</section>
-		<footer class="info">
-			<p>Double-click to edit a todo</p>
-			<p>Created by <a href="https://twitter.com/map_and_filter">Pavlo Mitin</a></p>
-			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
-		</footer>
-	</body>
+        </section>
+        <footer class="info">
+            <p>Double-click to edit a todo</p>
+            <p>Created by <a href="https://twitter.com/map_and_filter">Pavlo Mitin</a></p>
+            <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+        </footer>
+    </body>
 </html>

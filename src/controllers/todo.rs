@@ -1,5 +1,5 @@
 use rocket::request::Form;
-use rocket::response::{status, Redirect};
+use rocket::response::status;
 
 use {CookieSessionId, QueryParams};
 use super::visit_todos;
@@ -24,11 +24,11 @@ fn create(
     query_params: Option<QueryParams>,
     session_id: CookieSessionId,
     db: RedisConnection,
-) -> Result<Redirect, status::Custom<String>> {
+) -> Result<String, status::Custom<String>> {
     let todo_fields = form.get();
-    let todos = Repository::new(session_id.into(), db);
+    let repo = Repository::new(session_id.into(), db);
 
-    todos.create(&todo_fields.description.trim())?; //TODO Handle empty description.
+    repo.create(&todo_fields.description.trim())?; //TODO Handle empty description.
 
     visit_todos(query_params)
 }
@@ -40,7 +40,7 @@ fn update(
     query_params: Option<QueryParams>,
     session_id: CookieSessionId,
     db: RedisConnection,
-) -> Result<Redirect, status::Custom<String>> {
+) -> Result<String, status::Custom<String>> {
     let repo = Repository::new(session_id.into(), db);
     let todo_fields = form.get();
 
@@ -65,10 +65,10 @@ fn destroy(
     query_params: Option<QueryParams>,
     session_id: CookieSessionId,
     db: RedisConnection,
-) -> Result<Redirect, status::Custom<String>> {
-    let todos = Repository::new(session_id.into(), db);
+) -> Result<String, status::Custom<String>> {
+    let repo = Repository::new(session_id.into(), db);
 
-    todos.clear(id)?;
+    repo.clear(id)?;
 
     visit_todos(query_params)
 }

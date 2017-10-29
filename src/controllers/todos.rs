@@ -1,6 +1,6 @@
 use rocket::request::Form;
 use rocket_contrib::Template;
-use rocket::response::{status, Redirect};
+use rocket::response::status;
 use rocket::http;
 
 use {todo_filter, CookieSessionId, QueryParams};
@@ -31,7 +31,7 @@ fn update(
     query_params: Option<QueryParams>,
     session_id: CookieSessionId,
     db: RedisConnection,
-) -> Result<Redirect, status::Custom<String>> {
+) -> Result<String, status::Custom<String>> {
     let form_data = form.get();
     let repo = Repository::new(session_id.into(), db);
 

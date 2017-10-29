@@ -2,22 +2,24 @@
 #![feature(custom_derive)]
 #![plugin(rocket_codegen)]
 
+extern crate rocket;
+extern crate rocket_contrib;
+
+#[macro_use]
+extern crate serde_derive;
+
 extern crate r2d2;
 extern crate r2d2_redis;
 extern crate rand;
 extern crate redis;
-extern crate rocket;
-extern crate rocket_contrib;
 extern crate serde;
-#[macro_use]
-extern crate serde_derive;
 extern crate serde_json;
 
+use rocket_contrib::Template;
 use rocket::http::{self, Cookie, RawStr};
 use rocket::request::{self, FromFormValue};
 use rocket::response::status;
 use rocket::Outcome;
-use rocket_contrib::Template;
 
 mod static_files;
 mod db;
@@ -102,12 +104,12 @@ impl<'v> FromFormValue<'v> for TodoFilter {
 
 fn main() {
     let app = rocket::ignite();
-    let pool = { db_pool(app.config()) };
+    let redis_pool = { db_pool(app.config()) };
 
     app.mount("/", routes![root::index, static_files::all])
         .mount("/todo", routes![todo::create, todo::update, todo::destroy])
         .mount("/todos", routes![todos::show, todos::update])
-        .manage(pool)
+        .manage(redis_pool)
         .attach(Template::fairing())
         .launch();
 }

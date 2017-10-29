@@ -8,7 +8,7 @@ Turbolinks, Rust, Rocket, Redis, Serde, Handlebars, RESTful
 
 ## Buzzwords
 
-- [ ] [Turbolinks](https://github.com/turbolinks/turbolinks)
+- [x] [Turbolinks](https://github.com/turbolinks/turbolinks)
 - [x] [Rocket](https://rocket.rs/)
 - [x] [r2d2](https://github.com/sfackler/r2d2)
 - [x] [Redis](https://redis.io/)
