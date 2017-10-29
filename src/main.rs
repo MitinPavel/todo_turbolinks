@@ -13,9 +13,6 @@ extern crate serde;
 extern crate serde_derive;
 extern crate serde_json;
 
-use std::default::Default;
-use r2d2_redis::RedisConnectionManager;
-use rocket::config;
 use rocket::http::{self, Cookie, RawStr};
 use rocket::request::{self, FromFormValue};
 use rocket::response::status;
@@ -28,30 +25,12 @@ mod domain;
 mod view_models;
 mod controllers;
 
+use db::redis::db_pool;
 use domain::TodoFilter;
 use domain::SessionId;
 use controllers::root;
 use controllers::todo;
 use controllers::todos;
-
-// DB Pool
-
-const REDIS_ADDRESS_CONFIG_KEY: &'static str = "redis_connection_address";
-const REDIS_DEFAULT_ADDRESS: &'static str = "redis://localhost";
-
-type Pool = r2d2::Pool<RedisConnectionManager>;
-
-fn init_db_pool(app_config: &config::Config) -> Pool {
-    let address = app_config
-        .extras
-        .get(REDIS_ADDRESS_CONFIG_KEY)
-        .and_then(|v| v.as_str())
-        .unwrap_or_else(|| REDIS_DEFAULT_ADDRESS);
-    let manager = RedisConnectionManager::new(address).expect("connection manager");
-    let redis_config = Default::default();
-
-    r2d2::Pool::new(redis_config, manager).expect("db pool")
-}
 
 // Cookie session
 
@@ -123,12 +102,12 @@ impl<'v> FromFormValue<'v> for TodoFilter {
 
 fn main() {
     let app = rocket::ignite();
-    let db_pool = { init_db_pool(app.config()) };
+    let pool = { db_pool(app.config()) };
 
     app.mount("/", routes![root::index, static_files::all])
         .mount("/todo", routes![todo::create, todo::update, todo::destroy])
         .mount("/todos", routes![todos::show, todos::update])
-        .manage(db_pool)
+        .manage(pool)
         .attach(Template::fairing())
         .launch();
 }
