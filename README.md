@@ -17,7 +17,10 @@ Turbolinks, Rust, Rocket, Redis, Serde, Handlebars, RESTful
  
 ## Getting started
 
+Having Redis up and running on localhost:6379
 ```
+git clone git@github.com:MitinPavel/todo_turbolinks.git
+cd todo_turbolinks/
 cargo run
 ```
 
