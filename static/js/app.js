@@ -14,10 +14,10 @@ function startDescriptionEditing(id) {
 
 function submitForm(form) {
   $.ajax({
-    url     : form.action,
-    type    : form.method,
+    url:      form.action,
+    type:     form.method,
     dataType: 'script',
-    data    : $(form).serialize()
+    data:     $(form).serialize()
   });
 }
 
