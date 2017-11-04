@@ -24,22 +24,11 @@ cd todo_turbolinks/
 cargo run
 ```
 
-## Rust version
+## Dependencies
 
-Tested on Rust 1.13, 1.14, 1.17.
-
-```
-$ rustc --version
-rustc 1.22.0-nightly (a47c9f870 2017-10-11)
-```
-
-## Development environment
-
-```
-$ uname -a
-Linux blah 4.4.0-97-generic #120-Ubuntu SMP Tue Sep 19 17:28:18 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux
-
-```
+Rust: 1.22.0-nightly
+Rocket: 0.3.3
+Turbolinks: 5.0.3
 
 ## License
 
