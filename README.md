@@ -2,6 +2,8 @@
 
 A simple [Turbolinks 5](https://github.com/turbolinks/turbolinks) app visually indistinguishable from [TodoMVC](http://todomvc.com/).
 
+Read [a blog post](http://novembermeeting.blogspot.co.uk/2017/10/todoturbolinks-rocket-redis-turbolinks-5.html) about the app. 
+
 ## Tags
 
 Turbolinks, Rust, Rocket, Redis, Serde, Handlebars, RESTful
