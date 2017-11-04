@@ -164,11 +164,13 @@ impl Repository {
     fn all(&self) -> Result<Vec<Todo>, RepositoryError> {
         let ids_and_payloads: Vec<(usize, String)> = self.connection.hgetall(self.session_key())?;
 
-        let todos = ids_and_payloads
+        let mut todos: Vec<Todo> = ids_and_payloads
             .into_iter()
             .map(|(_, payload)| serde_json::from_str(&payload))
             .flat_map(|r| r)
             .collect();
+
+        todos.sort_unstable_by_key(|t| t.id);
 
         Ok(todos)
     }
